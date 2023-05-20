@@ -52,4 +52,10 @@ public class UserService {
                 .receiveCount(fromUser.getTodayGetComplain())
                 .build();
     }
+
+    @Transactional
+    public int login(String keyNumber) {
+        User user = userRepository.findByKeyNumber(keyNumber).get(0);
+        return user.getHomeNumber();
+    }
 }

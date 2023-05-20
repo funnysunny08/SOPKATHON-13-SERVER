@@ -10,6 +10,7 @@ public interface UserRepository extends Repository<User, Integer> {
 
     // READ
     User findByHomeNumber(int homeNumber);
+    List<User> findByKeyNumber(String keyNumber);
 
     // UPDATE
 
