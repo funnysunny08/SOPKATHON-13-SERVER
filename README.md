@@ -254,6 +254,7 @@ issue_num : issue 번호에 맞게 생성
 
 ### 🥫 ERD
 <img width="393" alt="image" src="https://github.com/funnysunny08/Algorithm-java/assets/88873302/49a48444-05cb-4995-b06d-bdff7ac38cfb">
+<br/>
 
 <img width="326" alt="image" src="https://github.com/funnysunny08/Algorithm-java/assets/88873302/4ff0438a-9339-47ad-9387-f8400a78e7df">
 
