@@ -18,6 +18,7 @@ public enum Success {
     GET_EMOTION_SUCCESS(HttpStatus.OK, "감정 조회에 성공했습니다."),
     COMPLAIN_FIND_SUCCESS(HttpStatus.OK, "오늘 찌르기 조회에 성공하였습니다"),
     COMPLAIN_LIST_FIND_SUCCESS(HttpStatus.OK, "주간 리포트 조회에 성공하였습니다"),
+    SIGNIN_SUCESS(HttpStatus.OK, "로그인 성공"),
 
     /**
      * 201 CREATED

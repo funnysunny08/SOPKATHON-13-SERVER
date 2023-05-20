@@ -91,5 +91,9 @@ public class UserService {
         return result;
     }
 
-
+    @Transactional
+    public int login(String keyNumber) {
+        User user = userRepository.findByKeyNumber(keyNumber).get(0);
+        return user.getHomeNumber();
+    }
 }

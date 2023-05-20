@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import sopt.sopkathon13.Server.common.dto.ApiResponse;
 import sopt.sopkathon13.Server.controller.dto.response.ComplainReportResponseDto;
+import sopt.sopkathon13.Server.controller.dto.request.LoginRequestDto;
 import sopt.sopkathon13.Server.controller.dto.response.TodayComplainResponseDto;
 import sopt.sopkathon13.Server.exception.Success;
 import sopt.sopkathon13.Server.service.UserService;
@@ -28,5 +29,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<List<ComplainReportResponseDto>> readComplainList(@PathVariable("homeNumber") int homeNumber){
         return ApiResponse.success(Success.COMPLAIN_LIST_FIND_SUCCESS, userService.getAllComplainReport(homeNumber));
+
+    @GetMapping("")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse login(@RequestBody final LoginRequestDto loginRequestDto) {
+        System.out.println("dsf");
+        int homeNumber = userService.login(loginRequestDto.getKeyNumber());
+        return ApiResponse.success(Success.SIGNIN_SUCESS, homeNumber);
     }
 }
