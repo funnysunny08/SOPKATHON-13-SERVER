@@ -29,8 +29,9 @@ public class UserController {
 
     @GetMapping("/{homeNumber}/weeklyList")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<List<ComplainReportResponseDto>> readComplainList(@PathVariable("homeNumber") int homeNumber){
+    public ApiResponse<List<ComplainReportResponseDto>> readComplainList(@PathVariable("homeNumber") int homeNumber) {
         return ApiResponse.success(Success.COMPLAIN_LIST_FIND_SUCCESS, userService.getAllComplainReport(homeNumber));
+    }
 
     @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
