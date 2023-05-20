@@ -16,6 +16,7 @@ public enum Success {
     GET_POST_SUCCESS(HttpStatus.OK, "게시물 조회에 성공했습니다."),
     GET_EMOTION_CALENDAR_SUCCESS(HttpStatus.OK, "감정 캘린더 조회에 성공했습니다."),
     GET_EMOTION_SUCCESS(HttpStatus.OK, "감정 조회에 성공했습니다."),
+    COMPLAIN_FIND_SUCCESS(HttpStatus.OK, "오늘 찌르기 조회에 성공하였습니다"),
 
     /**
      * 201 CREATED
