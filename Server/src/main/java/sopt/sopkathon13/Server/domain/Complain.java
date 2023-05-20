@@ -25,12 +25,12 @@ public class Complain {
     @ColumnDefault("0")
     private Long complainCount;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fromId", nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fromHomeNumber", nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
     private User fromUser;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "toId", nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "toHomeNumber", nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
     private User toUser;
 
     public Complain(Long complainCount, User fromUser, User toUser) {
