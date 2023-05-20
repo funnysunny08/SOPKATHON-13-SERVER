@@ -3,6 +3,7 @@ package sopt.sopkathon13.Server.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
     @Id
@@ -36,5 +38,9 @@ public class User {
 
     public static User newInstance(int homeNumber, String keyNumber, Long todayGetComplain) {
         return new User(homeNumber, keyNumber, todayGetComplain);
+    }
+
+    public void updateUserTodayCount() {
+        this.todayGetComplain += 1;
     }
 }

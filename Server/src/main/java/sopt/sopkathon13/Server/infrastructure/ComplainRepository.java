@@ -11,9 +11,10 @@ public interface ComplainRepository extends Repository<Complain, Long> {
     void save(Complain complain);
 
     // READ
-    @Modifying
-    @Query(value = "select Complain c where c.fromHomeNumber = :fromHomeNumber and c.toHomeNumber = :toHomeNumber", nativeQuery = true)
-    Complain findByFromHomeNumberAndToHomeNumber(User fromHomeNumber, User toHomeNumber);
+//    @Modifying
+//    @Query(value = "select c.complain_id from complain c where c.from_home_number = :fromHomeNumber and c.to_home_number = :toHomeNumber", nativeQuery = true)
+    Complain findByFromUserAndToUser(User fromUser, User toUser);
+    Complain findById(Long id);
 
     // UPDATE
     @Modifying
