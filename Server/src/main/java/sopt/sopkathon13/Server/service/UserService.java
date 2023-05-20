@@ -100,15 +100,15 @@ public class UserService {
     }
 
     @Transactional
-    public WeeklyComplainResponseDto readWeeklyComplain (int homeNumber, WeeklyComplainRequestDto weeklyComplainRequestDto) {
+    public WeeklyComplainResponseDto readWeeklyComplain (int homeNumber, String startDate, String endDate) {
         User user = userRepository.findByHomeNumber(homeNumber);
-        List<Complain> complainedMe = complainRepository.findByDateBetweenAndToUser(weeklyComplainRequestDto.getStartDate(), weeklyComplainRequestDto.getEndDate(), user);
+        List<Complain> complainedMe = complainRepository.findByDateBetweenAndToUser(LocalDate.parse(startDate), LocalDate.parse(endDate), user);
         int complainedCount = 0;
         for (int i = 0; i < complainedMe.size(); i++) {
             complainedCount += complainedMe.get(i).getComplainCount();
         }
         int complainedDays = complainedMe.size();
-        List<Complain> complainAll = complainRepository.findByDateBetween(weeklyComplainRequestDto.getStartDate(), weeklyComplainRequestDto.getEndDate());
+        List<Complain> complainAll = complainRepository.findByDateBetween(LocalDate.parse(startDate), LocalDate.parse(endDate));
         int all = 0;
         for (int i = 0; i < complainAll.size(); i++) {
             all += complainAll.get(i).getComplainCount();

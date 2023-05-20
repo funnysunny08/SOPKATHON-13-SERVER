@@ -33,7 +33,7 @@ public class UserController {
         return ApiResponse.success(Success.COMPLAIN_LIST_FIND_SUCCESS, userService.getAllComplainReport(homeNumber));
     }
 
-    @GetMapping("")
+    @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse login(@RequestBody final LoginRequestDto loginRequestDto) {
         System.out.println("dsf");
@@ -43,8 +43,8 @@ public class UserController {
 
     @GetMapping("/{homeNumber}/weekly")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<WeeklyComplainResponseDto> readWeeklyComplain(@PathVariable("homeNumber") int homeNumber, @RequestBody final
-                                                                     WeeklyComplainRequestDto weeklyComplainRequestDto) {
-        return ApiResponse.success(Success.GET_WEEKLY_COMPLAIN, userService.readWeeklyComplain(homeNumber, weeklyComplainRequestDto));
+    public ApiResponse<WeeklyComplainResponseDto> readWeeklyComplain(@PathVariable("homeNumber") int homeNumber,
+                                                                     @RequestParam String startDate, @RequestParam String endDate) {
+        return ApiResponse.success(Success.GET_WEEKLY_COMPLAIN, userService.readWeeklyComplain(homeNumber, startDate, endDate));
     }
 }
