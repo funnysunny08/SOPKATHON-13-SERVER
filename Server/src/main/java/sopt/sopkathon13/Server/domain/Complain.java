@@ -30,7 +30,7 @@ public class Complain {
     private User fromUser;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fromId", nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
+    @JoinColumn(name = "toId", nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
     private User toUser;
 
     public Complain(Long complainCount, User fromUser, User toUser) {
