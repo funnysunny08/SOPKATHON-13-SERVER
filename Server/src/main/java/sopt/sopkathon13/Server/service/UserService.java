@@ -3,9 +3,11 @@ package sopt.sopkathon13.Server.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sopt.sopkathon13.Server.controller.dto.request.WeeklyComplainRequestDto;
 import sopt.sopkathon13.Server.common.CalendarUtil;
 import sopt.sopkathon13.Server.controller.dto.response.ComplainReportResponseDto;
 import sopt.sopkathon13.Server.controller.dto.response.TodayComplainResponseDto;
+import sopt.sopkathon13.Server.controller.dto.response.WeeklyComplainResponseDto;
 import sopt.sopkathon13.Server.domain.Complain;
 import sopt.sopkathon13.Server.domain.User;
 import sopt.sopkathon13.Server.infrastructure.ComplainRepository;
@@ -95,5 +97,23 @@ public class UserService {
     public int login(String keyNumber) {
         User user = userRepository.findByKeyNumber(keyNumber).get(0);
         return user.getHomeNumber();
+    }
+
+    @Transactional
+    public WeeklyComplainResponseDto readWeeklyComplain (int homeNumber, WeeklyComplainRequestDto weeklyComplainRequestDto) {
+        User user = userRepository.findByHomeNumber(homeNumber);
+        List<Complain> complainedMe = complainRepository.findByDateBetweenAndToUser(weeklyComplainRequestDto.getStartDate(), weeklyComplainRequestDto.getEndDate(), user);
+        int complainedCount = 0;
+        for (int i = 0; i < complainedMe.size(); i++) {
+            complainedCount += complainedMe.get(i).getComplainCount();
+        }
+        int complainedDays = complainedMe.size();
+        List<Complain> complainAll = complainRepository.findByDateBetween(weeklyComplainRequestDto.getStartDate(), weeklyComplainRequestDto.getEndDate());
+        int all = 0;
+        for (int i = 0; i < complainAll.size(); i++) {
+            all += complainAll.get(i).getComplainCount();
+        }
+        int averageCount = all / complainAll.size();
+        return WeeklyComplainResponseDto.of(averageCount, complainedDays, complainedCount);
     }
 }

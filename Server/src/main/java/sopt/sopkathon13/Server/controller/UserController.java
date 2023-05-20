@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import sopt.sopkathon13.Server.common.dto.ApiResponse;
 import sopt.sopkathon13.Server.controller.dto.response.ComplainReportResponseDto;
 import sopt.sopkathon13.Server.controller.dto.request.LoginRequestDto;
+import sopt.sopkathon13.Server.controller.dto.request.WeeklyComplainRequestDto;
 import sopt.sopkathon13.Server.controller.dto.response.TodayComplainResponseDto;
+import sopt.sopkathon13.Server.controller.dto.response.WeeklyComplainResponseDto;
 import sopt.sopkathon13.Server.exception.Success;
 import sopt.sopkathon13.Server.service.UserService;
 
@@ -36,5 +38,12 @@ public class UserController {
         System.out.println("dsf");
         int homeNumber = userService.login(loginRequestDto.getKeyNumber());
         return ApiResponse.success(Success.SIGNIN_SUCESS, homeNumber);
+    }
+
+    @GetMapping("/{homeNumber}/weekly")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<WeeklyComplainResponseDto> readWeeklyComplain(@PathVariable("homeNumber") int homeNumber, @RequestBody final
+                                                                     WeeklyComplainRequestDto weeklyComplainRequestDto) {
+        return ApiResponse.success(Success.GET_WEEKLY_COMPLAIN, userService.readWeeklyComplain(homeNumber, weeklyComplainRequestDto));
     }
 }
