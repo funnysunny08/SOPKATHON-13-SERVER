@@ -10,6 +10,8 @@ import sopt.sopkathon13.Server.controller.dto.response.TodayComplainResponseDto;
 import sopt.sopkathon13.Server.controller.dto.response.WeeklyComplainResponseDto;
 import sopt.sopkathon13.Server.domain.Complain;
 import sopt.sopkathon13.Server.domain.User;
+import sopt.sopkathon13.Server.exception.Error;
+import sopt.sopkathon13.Server.exception.model.NotFoundException;
 import sopt.sopkathon13.Server.infrastructure.ComplainRepository;
 import sopt.sopkathon13.Server.infrastructure.UserRepository;
 
@@ -95,13 +97,15 @@ public class UserService {
 
     @Transactional
     public int login(String keyNumber) {
-        User user = userRepository.findByKeyNumber(keyNumber).get(0);
+        User user = userRepository.findByKeyNumber(keyNumber)
+                .orElseThrow(() -> new NotFoundException(Error.NOT_FOUND_USER_EXCEPTION, Error.NOT_FOUND_USER_EXCEPTION.getMessage()));
         return user.getHomeNumber();
     }
 
     @Transactional
     public WeeklyComplainResponseDto readWeeklyComplain (int homeNumber, String startDate, String endDate) {
-        User user = userRepository.findByHomeNumber(homeNumber);
+        User user = userRepository.findByHomeNumber(homeNumber)
+                .orElseThrow(() -> new NotFoundException(Error.NOT_FOUND_USER_EXCEPTION, Error.NOT_FOUND_USER_EXCEPTION.getMessage()));
         List<Complain> complainedMe = complainRepository.findByDateBetweenAndToUser(LocalDate.parse(startDate), LocalDate.parse(endDate), user);
         int complainedCount = 0;
         for (int i = 0; i < complainedMe.size(); i++) {

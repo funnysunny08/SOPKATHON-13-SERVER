@@ -11,9 +11,9 @@ public interface UserRepository extends Repository<User, Integer> {
     // CREATE
 
     // READ
-    User findByHomeNumber(int homeNumber);
+    Optional<User> findByHomeNumber(int homeNumber);
 
-    List<User> findByKeyNumber(String keyNumber);
+    Optional<User> findByKeyNumber(String keyNumber);
 
 
     // UPDATE
