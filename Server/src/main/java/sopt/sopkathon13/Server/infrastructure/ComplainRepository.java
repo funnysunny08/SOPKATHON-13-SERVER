@@ -3,6 +3,7 @@ package sopt.sopkathon13.Server.infrastructure;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import sopt.sopkathon13.Server.domain.Complain;
 import sopt.sopkathon13.Server.domain.User;
 
