@@ -17,10 +17,7 @@ import sopt.sopkathon13.Server.infrastructure.UserRepository;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -31,28 +28,41 @@ public class UserService {
 
     @Transactional
     public TodayComplainResponseDto findTodayComplain(int fromHomeNumber){
-        User upUser = userRepository.findByHomeNumber(fromHomeNumber + 100);
-        User rightUser = userRepository.findByHomeNumber(fromHomeNumber + 1);
-        User downUser = userRepository.findByHomeNumber(fromHomeNumber - 100);
-        User leftUser = userRepository.findByHomeNumber(fromHomeNumber - 1);
+        Optional<User> upUser = userRepository.findByHomeNumber(fromHomeNumber + 100);
+        Optional<User> rightUser = userRepository.findByHomeNumber(fromHomeNumber + 1);
+        Optional<User> downUser = userRepository.findByHomeNumber(fromHomeNumber - 100);
+        Optional<User> leftUser = userRepository.findByHomeNumber(fromHomeNumber - 1);
 
-        List<Long> up = new ArrayList<>();
-        up.add((long)(fromHomeNumber + 100));
-        up.add(upUser.getTodayGetComplain());
+        List<Long> up = Collections.emptyList();
+        if(upUser.isPresent()){
+            up = new ArrayList<>();
+            up.add((long)(fromHomeNumber + 100));
+            up.add(upUser.get().getTodayGetComplain());
+        }
 
-        List<Long> right = new ArrayList<>();
-        right.add((long)(fromHomeNumber + 1));
-        right.add(rightUser.getTodayGetComplain());
+        List<Long> right = Collections.emptyList();
+        if(rightUser.isPresent()){
+            right = new ArrayList<>();
+            right.add((long)(fromHomeNumber + 1));
+            right.add(rightUser.get().getTodayGetComplain());
+        }
 
-        List<Long> down = new ArrayList<>();
-        down.add((long)(fromHomeNumber - 100));
-        down.add(downUser.getTodayGetComplain());
+        List<Long> down = Collections.emptyList();
+        if(downUser.isPresent()){
+            down = new ArrayList<>();
+            down.add((long)(fromHomeNumber - 100));
+            down.add(downUser.get().getTodayGetComplain());
+        }
 
-        List<Long> left = new ArrayList<>();
-        left.add((long)(fromHomeNumber - 1));
-        left.add(leftUser.getTodayGetComplain());
+        List<Long> left = Collections.emptyList();
+        if(leftUser.isPresent()){
+            left = new ArrayList<>();
+            left.add((long)(fromHomeNumber - 1));
+            left.add(leftUser.get().getTodayGetComplain());
+        }
 
-        User fromUser = userRepository.findByHomeNumber(fromHomeNumber);
+        User fromUser = userRepository.findByHomeNumber(fromHomeNumber)
+                .orElseThrow(() -> new NotFoundException(Error.NOT_FOUND_USER_EXCEPTION, Error.NOT_FOUND_USER_EXCEPTION.getMessage()));
 
         return TodayComplainResponseDto.builder()
                 .up(up)
@@ -66,7 +76,8 @@ public class UserService {
     public List<ComplainReportResponseDto> getAllComplainReport(int homeNumber) {
         List<ComplainReportResponseDto> result = new ArrayList<>();
 
-        User user = userRepository.findByHomeNumber(homeNumber);
+        User user = userRepository.findByHomeNumber(homeNumber)
+                .orElseThrow(() -> new NotFoundException(Error.NOT_FOUND_USER_EXCEPTION, Error.NOT_FOUND_USER_EXCEPTION.getMessage()));
 
         LocalDate date = user.getSignedAt();
 
