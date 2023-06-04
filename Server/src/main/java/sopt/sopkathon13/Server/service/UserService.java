@@ -104,7 +104,8 @@ public class UserService {
 
     @Transactional
     public WeeklyComplainResponseDto readWeeklyComplain (int homeNumber, String startDate, String endDate) {
-        User user = userRepository.findByHomeNumber(homeNumber);
+        User user = userRepository.findByHomeNumber(homeNumber)
+                .orElseThrow(() -> new NotFoundException(Error.NOT_FOUND_USER_EXCEPTION, Error.NOT_FOUND_USER_EXCEPTION.getMessage()));
         List<Complain> complainedMe = complainRepository.findByDateBetweenAndToUser(LocalDate.parse(startDate), LocalDate.parse(endDate), user);
         int complainedCount = 0;
         for (int i = 0; i < complainedMe.size(); i++) {
