@@ -36,7 +36,6 @@ public class UserController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse login(@RequestBody final LoginRequestDto loginRequestDto) {
-        System.out.println("dsf");
         int homeNumber = userService.login(loginRequestDto.getKeyNumber());
         return ApiResponse.success(Success.SIGNIN_SUCESS, homeNumber);
     }
