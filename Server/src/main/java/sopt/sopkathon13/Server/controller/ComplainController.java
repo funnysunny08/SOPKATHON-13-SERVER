@@ -20,6 +20,7 @@ public class ComplainController {
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse create(@RequestHeader("homeNumber") Integer homeNumber, @RequestBody final ComplainRequestDto complainRequestDto) {
         complainService.create(homeNumber, complainRequestDto.getToHomeNumber());
+
         return ApiResponse.success(Success.MAKE_COMPLAIN_SUCCESS);
     }
 }
